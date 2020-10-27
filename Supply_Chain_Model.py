@@ -27,11 +27,6 @@ class SC_model:
                                           [18, 12, 27, 11, 33, 28, 23, 22]])
         self.max_order = 40
         self.min_order = 1
-        self.demand_product_region = np.array([[12, 12, 7, 11, 8, 15, 10, 15],
-                                               [10, 13, 11, 5, 8, 13, 11, 8],
-                                               [15, 12, 16, 20, 13, 13, 7, 13],
-                                               [6, 11, 7, 8, 10, 7, 10, 7],
-                                               [18, 14, 18, 13, 18, 13, 16, 18]])
 
         self.M = 10 ** 4
         self.satisfactory_thresh = [0.9] * self.num_products
@@ -97,20 +92,7 @@ class SC_model:
                                 low = self.fac_reg_distance[j,c]
                                 index = j
 
-                        for k in range(self.num_products):
-                           if demands[i,t,k,c] > inventory_level[i, t,k, index] and demands[i,t,k,c] > 0:
-
-                               demands[i,t,k,c] -= inventory_level[i,t,k, index]
-
-                               transported_level[i,t,k, index] = inventory_level[i,t,k, index]
-                               inventory_level[ i, t, k, index] = 0
-                           elif demands[i,t,k,c] <= inventory_level[i,t, k, index] and demands[i,t,k,c] > 0:
-                               transported_level[i,t, k, index] = demands[i,t,k,c]
-                               demands[i,t,k,c] = 0
-                               inventory_level[i,t, k, index] -= transported_level[i,t, k, index]
-                               if t != self.num_prd - 1:
-                                   inventory_level[i,t+1, k, index] = inventory_level[i,t, k, index]
-                        base = low
+                  
 
                     for k in range(self.num_products):
                         if demands[i,t,k,c] > 0:
